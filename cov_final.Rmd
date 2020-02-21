@@ -1,0 +1,622 @@
+---
+title: "Coronavirus"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(deSolve)
+```
+
+## Impact of quarantine on time taken to reach epidemic peak for China:  
+
+```{r}
+sir_equations <- function(time, variables, parameters) {
+    with(as.list(c(variables, parameters)), {
+        dS <- -beta * I * S
+        dI <-  beta * I * S - gamma * I
+        dR <-  gamma * I
+        return(list(c(dS, dI, dR)))
+    })
+}
+
+
+
+
+#Parameter Values
+parameters_values <- c(
+    beta  = 2.44529*10^-10, # infectious contact rate (/person/day)
+    gamma = 0.0125429    # recovery rate (/day)
+)
+
+
+#Initial Values
+initial_values <- c(
+    S = 1.42*10^9,  # number of susceptibles at time = 0
+    I =   278,  # number of infectious at time = 0
+    R =   0   # number of recovered (and immune) at time = 0
+)
+
+# days
+time_values <- seq(0, 500) 
+
+
+#Solving SIR Equations
+sir_values_1 <- ode(
+    y = initial_values,
+    times = time_values,
+    func = sir_equations,
+    parms = parameters_values 
+)
+
+sir_values_1 <- as.data.frame(sir_values_1)
+
+
+#Plotting Graphs
+
+with(sir_values_1, {
+    # plotting the time series of susceptibles:
+    plot(time, S, type = "l", col = "blue",
+         xlab = "time (days)", ylab = "number of people",main="Peak Infection for no Quarantine occurring at 17 March 2020 ")
+    # adding the time series of infectious:
+    lines(time, I, col = "red")
+    # adding the time series of recovered:
+    lines(time, R, col = "green")
+})
+
+# adding a legend:
+legend("right", c("susceptibles", "infectious", "recovered"),
+       col = c("blue", "red", "green"), lty = 1, bty = "n")
+abline(v=which(sir_values_1$I==max(sir_values_1$I)),lwd=2,lty=2)
+
+```
+
+```{r}
+
+library(deSolve)
+par(mfrow=c(2,2))
+par(mar=c(2.5,2.5,2.5,2.5))
+##CHINA
+#Framing SIR Equation
+sir_equations <- function(time, variables, parameters) {
+    with(as.list(c(variables, parameters)), {
+        dS <- -beta * I * S
+        dI <-  beta * I * S - gamma * I
+        dR <-  gamma * I
+        return(list(c(dS, dI, dR)))
+    })
+}
+
+
+
+
+#Parameter Values
+parameters_values <- c(
+    beta  = (2.44529*10^-10)*0.8, # infectious contact rate (/person/day)
+    gamma = 0.0125429    # recovery rate (/day)
+)
+
+
+#Initial Values
+initial_values <- c(
+    S = 1.42*10^9,  # number of susceptibles at time = 0
+    I =   278,  # number of infectious at time = 0
+    R =   0   # number of recovered (and immune) at time = 0
+)
+
+# days
+time_values <- seq(0, 500) 
+
+
+#Solving SIR Equations
+sir_values_1 <- ode(
+    y = initial_values,
+    times = time_values,
+    func = sir_equations,
+    parms = parameters_values 
+)
+
+sir_values_1 <- as.data.frame(sir_values_1)
+
+
+#Plotting Graphs
+
+with(sir_values_1, {
+    # plotting the time series of susceptibles:
+    plot(time, S, type = "l", col = "blue",
+         xlab = "time (days)", ylab = "number of people",main="Peak Infection for 20% Quarantine on 31/03")
+    # adding the time series of infectious:
+    lines(time, I, col = "red")
+    # adding the time series of recovered:
+    lines(time, R, col = "green")
+})
+
+# adding a legend:
+legend("right", c("susceptibles", "infectious", "recovered"),
+       col = c("blue", "red", "green"), lty = 1, bty = "n")
+abline(v=which(sir_values_1$I==max(sir_values_1$I)),lwd=2,lty=2)
+#Value of R_0
+
+
+##CHINA
+#Framing SIR Equation
+sir_equations <- function(time, variables, parameters) {
+    with(as.list(c(variables, parameters)), {
+        dS <- -beta * I * S
+        dI <-  beta * I * S - gamma * I
+        dR <-  gamma * I
+        return(list(c(dS, dI, dR)))
+    })
+}
+
+
+
+
+#Parameter Values
+parameters_values <- c(
+    beta  = (2.44529*10^-10)*0.6, # infectious contact rate (/person/day)
+    gamma = 0.0125429    # recovery rate (/day)
+)
+
+
+#Initial Values
+initial_values <- c(
+    S = 1.42*10^9,  # number of susceptibles at time = 0
+    I =   278,  # number of infectious at time = 0
+    R =   0   # number of recovered (and immune) at time = 0
+)
+
+# days
+time_values <- seq(0, 500) 
+
+
+#Solving SIR Equations
+sir_values_1 <- ode(
+    y = initial_values,
+    times = time_values,
+    func = sir_equations,
+    parms = parameters_values 
+)
+
+sir_values_1 <- as.data.frame(sir_values_1)
+
+
+#Plotting Graphs
+
+with(sir_values_1, {
+    # plotting the time series of susceptibles:
+    plot(time, S, type = "l", col = "blue",
+         xlab = "time (days)", ylab = "number of people",main="Peak Infection for 40% Quarantine on 24/04")
+    # adding the time series of infectious:
+    lines(time, I, col = "red")
+    # adding the time series of recovered:
+    lines(time, R, col = "green")
+})
+
+# adding a legend:
+legend("right", c("susceptibles", "infectious", "recovered"),
+       col = c("blue", "red", "green"), lty = 1, bty = "n")
+abline(v=which(sir_values_1$I==max(sir_values_1$I)),lwd=2,lty=2)
+#Value of R_0
+
+
+##CHINA
+#Framing SIR Equation
+sir_equations <- function(time, variables, parameters) {
+    with(as.list(c(variables, parameters)), {
+        dS <- -beta * I * S
+        dI <-  beta * I * S - gamma * I
+        dR <-  gamma * I
+        return(list(c(dS, dI, dR)))
+    })
+}
+
+
+
+
+#Parameter Values
+parameters_values <- c(
+    beta  = (2.44529*10^-10)*0.4, # infectious contact rate (/person/day)
+    gamma = 0.0125429    # recovery rate (/day)
+)
+
+
+#Initial Values
+initial_values <- c(
+    S = 1.42*10^9,  # number of susceptibles at time = 0
+    I =   278,  # number of infectious at time = 0
+    R =   0   # number of recovered (and immune) at time = 0
+)
+
+# days
+time_values <- seq(0, 500) 
+
+
+#Solving SIR Equations
+sir_values_1 <- ode(
+    y = initial_values,
+    times = time_values,
+    func = sir_equations,
+    parms = parameters_values 
+)
+
+sir_values_1 <- as.data.frame(sir_values_1)
+
+
+#Plotting Graphs
+
+with(sir_values_1, {
+    # plotting the time series of susceptibles:
+    plot(time, S, type = "l", col = "blue",
+         xlab = "time (days)", ylab = "number of people",main="Peak Infection for 60% Quarantine on 11/06")
+    # adding the time series of infectious:
+    lines(time, I, col = "red")
+    # adding the time series of recovered:
+    lines(time, R, col = "green")
+})
+
+# adding a legend:
+legend("right", c("susceptibles", "infectious", "recovered"),
+       col = c("blue", "red", "green"), lty = 1, bty = "n")
+abline(v=which(sir_values_1$I==max(sir_values_1$I)),lwd=2,lty=2)
+#Value of R_0
+
+
+##CHINA
+#Framing SIR Equation
+sir_equations <- function(time, variables, parameters) {
+    with(as.list(c(variables, parameters)), {
+        dS <- -beta * I * S
+        dI <-  beta * I * S - gamma * I
+        dR <-  gamma * I
+        return(list(c(dS, dI, dR)))
+    })
+}
+
+
+
+
+#Parameter Values
+parameters_values <- c(
+    beta  = (2.44529*10^-10)*0.2, # infectious contact rate (/person/day)
+    gamma = 0.0125429    # recovery rate (/day)
+)
+
+
+#Initial Values
+initial_values <- c(
+    S = 1.42*10^9,  # number of susceptibles at time = 0
+    I =   278,  # number of infectious at time = 0
+    R =   0   # number of recovered (and immune) at time = 0
+)
+
+# days
+time_values <- seq(0, 500) 
+
+
+#Solving SIR Equations
+sir_values_1 <- ode(
+    y = initial_values,
+    times = time_values,
+    func = sir_equations,
+    parms = parameters_values 
+)
+
+sir_values_1 <- as.data.frame(sir_values_1)
+
+
+#Plotting Graphs
+
+with(sir_values_1, {
+    # plotting the time series of susceptibles:
+    plot(time, S, type = "l", col = "blue",
+         xlab = "time (days)", ylab = "number of people",main="Peak Infection for 80% Quarantine on 17/11 ")
+    # adding the time series of infectious:
+    lines(time, I, col = "red")
+    # adding the time series of recovered:
+    lines(time, R, col = "green")
+})
+
+# adding a legend:
+legend("right", c("susceptibles", "infectious", "recovered"),
+       col = c("blue", "red", "green"), lty = 1, bty = "n")
+abline(v=which(sir_values_1$I==max(sir_values_1$I)),lwd=2,lty=2)
+#Value of R_0
+
+```
+As it can be observed that as the percentage of quarantine increases, the transmission rate decreases. The quarantine should be applied to those regions where the population density as well as area is high in order to reduce the transmission rate efficiently. 
+## Impact of quarantine on time taken to reach epidemic peak for USA:  
+```{r}
+library(deSolve)
+par(mfrow=c(2,2))
+par(mar=c(2.5,2.5,2.5,2.5))
+#Framing SIR Equation
+sir_equations <- function(time, variables, parameters) {
+    with(as.list(c(variables, parameters)), {
+        dS <- -beta * I * S
+        dI <-  beta * I * S - gamma * I
+        dR <-  gamma * I
+        return(list(c(dS, dI, dR)))
+    })
+}
+
+
+
+
+#Parameter Values
+parameters_values <- c(
+    beta  = 5.788104e-09, # infectious contact rate (/person/day)
+    gamma = 0.0125429    # recovery rate (/day)
+)
+
+
+#Initial Values
+initial_values <- c(
+    S = 32799999,  # number of susceptibles at time = 0
+    I =   1,  # number of infectious at time = 0
+    R =   0   # number of recovered (and immune) at time = 0
+)
+
+# days
+time_values <- seq(0, 500) 
+
+
+#Solving SIR Equations
+sir_values_1 <- ode(
+    y = initial_values,
+    times = time_values,
+    func = sir_equations,
+    parms = parameters_values 
+)
+
+sir_values_1 <- as.data.frame(sir_values_1)
+
+
+#Plotting Graphs
+
+with(sir_values_1, {
+    # plotting the time series of susceptibles:
+    plot(time, S, type = "l", col = "blue",
+         xlab = "time (days)", ylab = "number of people",main="Peak Infection for no Quarantine on 15/05 ")
+    # adding the time series of infectious:
+    lines(time, I, col = "red")
+    # adding the time series of recovered:
+    lines(time, R, col = "green")
+})
+
+# adding a legend:
+legend("right", c("susceptibles", "infectious", "recovered"),
+       col = c("blue", "red", "green"), lty = 1, bty = "n")
+abline(v=which(sir_values_1$I==max(sir_values_1$I)),lwd=2,lty=2)
+#Value of R_0
+
+
+##CHINA
+#Framing SIR Equation
+sir_equations <- function(time, variables, parameters) {
+    with(as.list(c(variables, parameters)), {
+        dS <- -beta * I * S
+        dI <-  beta * I * S - gamma * I
+        dR <-  gamma * I
+        return(list(c(dS, dI, dR)))
+    })
+}
+
+
+
+
+#Parameter Values
+parameters_values <- c(
+    beta  = (5.788104e-09)*0.8, # infectious contact rate (/person/day)
+    gamma = 0.0125429    # recovery rate (/day)
+)
+
+
+#Initial Values
+initial_values <- c(
+    S = 32799999,  # number of susceptibles at time = 0
+    I =   1,  # number of infectious at time = 0
+    R =   0   # number of recovered (and immune) at time = 0
+)
+
+# days
+time_values <- seq(0, 500) 
+
+
+#Solving SIR Equations
+sir_values_1 <- ode(
+    y = initial_values,
+    times = time_values,
+    func = sir_equations,
+    parms = parameters_values 
+)
+
+sir_values_1 <- as.data.frame(sir_values_1)
+
+
+#Plotting Graphs
+
+with(sir_values_1, {
+    # plotting the time series of susceptibles:
+    plot(time, S, type = "l", col = "blue",
+         xlab = "time (days)", ylab = "number of people",main="Peak Infection for 20% Quarantine on 13/06 ")
+    # adding the time series of infectious:
+    lines(time, I, col = "red")
+    # adding the time series of recovered:
+    lines(time, R, col = "green")
+})
+
+# adding a legend:
+legend("right", c("susceptibles", "infectious", "recovered"),
+       col = c("blue", "red", "green"), lty = 1, bty = "n")
+abline(v=which(sir_values_1$I==max(sir_values_1$I)),lwd=2,lty=2)
+#Value of R_0
+
+
+##CHINA
+#Framing SIR Equation
+sir_equations <- function(time, variables, parameters) {
+    with(as.list(c(variables, parameters)), {
+        dS <- -beta * I * S
+        dI <-  beta * I * S - gamma * I
+        dR <-  gamma * I
+        return(list(c(dS, dI, dR)))
+    })
+}
+
+
+
+
+#Parameter Values
+parameters_values <- c(
+    beta  = (5.788104e-09)*0.6, # infectious contact rate (/person/day)
+    gamma = 0.0125429    # recovery rate (/day)
+)
+
+
+#Initial Values
+initial_values <- c(
+    S = 32799999,  # number of susceptibles at time = 0
+    I =   1,  # number of infectious at time = 0
+    R =   0   # number of recovered (and immune) at time = 0
+)
+
+# days
+time_values <- seq(0, 500) 
+
+
+#Solving SIR Equations
+sir_values_1 <- ode(
+    y = initial_values,
+    times = time_values,
+    func = sir_equations,
+    parms = parameters_values 
+)
+
+sir_values_1 <- as.data.frame(sir_values_1)
+
+
+#Plotting Graphs
+
+with(sir_values_1, {
+    # plotting the time series of susceptibles:
+    plot(time, S, type = "l", col = "blue",
+         xlab = "time (days)", ylab = "number of people",main="Peak Infection for 40% Quarantine on 02/08")
+    # adding the time series of infectious:
+    lines(time, I, col = "red")
+    # adding the time series of recovered:
+    lines(time, R, col = "green")
+})
+
+# adding a legend:
+legend("right", c("susceptibles", "infectious", "recovered"),
+       col = c("blue", "red", "green"), lty = 1, bty = "n")
+abline(v=which(sir_values_1$I==max(sir_values_1$I)),lwd=2,lty=2)
+#Value of R_0
+
+
+
+##CHINA
+#Framing SIR Equation
+sir_equations <- function(time, variables, parameters) {
+    with(as.list(c(variables, parameters)), {
+        dS <- -beta * I * S
+        dI <-  beta * I * S - gamma * I
+        dR <-  gamma * I
+        return(list(c(dS, dI, dR)))
+    })
+}
+
+
+
+
+#Parameter Values
+parameters_values <- c(
+    beta  = (5.788104e-09)*0.4, # infectious contact rate (/person/day)
+    gamma = 0.0125429    # recovery rate (/day)
+)
+
+
+#Initial Values
+initial_values <- c(
+    S = 32799999,  # number of susceptibles at time = 0
+    I =   1,  # number of infectious at time = 0
+    R =   0   # number of recovered (and immune) at time = 0
+)
+
+# days
+time_values <- seq(0, 500) 
+
+
+#Solving SIR Equations
+sir_values_1 <- ode(
+    y = initial_values,
+    times = time_values,
+    func = sir_equations,
+    parms = parameters_values 
+)
+
+sir_values_1 <- as.data.frame(sir_values_1)
+
+
+#Plotting Graphs
+
+with(sir_values_1, {
+    # plotting the time series of susceptibles:
+    plot(time, S, type = "l", col = "blue",
+         xlab = "time (days)", ylab = "number of people",main="Peak Infection for 60% Quarantine on 18/11 ")
+    # adding the time series of infectious:
+    lines(time, I, col = "red")
+    # adding the time series of recovered:
+    lines(time, R, col = "green")
+})
+
+# adding a legend:
+legend("right", c("susceptibles", "infectious", "recovered"),
+       col = c("blue", "red", "green"), lty = 1, bty = "n")
+abline(v=which(sir_values_1$I==max(sir_values_1$I)),lwd=2,lty=2)
+#Value of R_0
+
+```
+
+## Data Set Used:
+![Data Set Used for Analaysis](/Users/mantr/OneDrive/Desktop/IIT_B/Screenshot (164).png)
+    
+## Prediction 
+![Predicted number of cases for China](/Users/mantr/OneDrive/Desktop/IIT_B/Value_pred.png)
+
+
+![Predicted number of cases for China](/Users/mantr/OneDrive/Desktop/IIT_B/Bar_pred.png)
+
+
+
+![Predicted number of cases for China in Line Graph](/Users/mantr/OneDrive/Desktop/IIT_B/Line_pred.png)
+
+![Predicted number of cases for USA](/Users/mantr/OneDrive/Desktop/IIT_B/US_pred_value.png)
+
+![Predicted number of cases for USA](/Users/mantr/OneDrive/Desktop/IIT_B/Bar_pred_US.png)
+
+
+
+
+### Thus we can see that look at the following parameters as :
+
+
+```{r echo=TRUE}
+#Number of new cases in USA and China on 31 Jan 2020
+Y1= 1381
+
+#Number of new cases in USA and China on 1 Feb 2020
+Y2=3338
+
+#Predicted number of new cases in USA and China on 31 Feb 2020
+X1=1985
+
+#Predicted number of new cases in USA and China on 1 Feb 2020
+X2=2102
+
+Percentage_error = 100*(Y1+Y2-X1-X2)/(Y1+Y2)
+print(Percentage_error)
+```
